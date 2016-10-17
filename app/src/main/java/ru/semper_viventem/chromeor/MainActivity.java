@@ -24,9 +24,9 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    public LinearLayout contenner;
+    private LinearLayout contenner;
     private WorkDB mDatabaseHelper;
-    SQLiteDatabase sdb;
+    private SQLiteDatabase sdb;
     private File dbfile;
 
     public static Tracker mTracker;
@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 super.onPreExecute();
                 contenner.removeAllViews();
                 pd = new ProgressDialog(context);
-                pd.setTitle("Login...");
-                pd.setMessage("Get database...");
+                pd.setTitle(getString(R.string.login));
+                pd.setMessage(getString(R.string.get_database));
                 pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 pd.setIndeterminate(true);
                 pd.show();
@@ -105,9 +105,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if (exitCode == 255) {
                     new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Oh no!")
-                            .setMessage("Are you sure that you have root?")
-                            .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                            .setTitle(R.string.oh_no)
+                            .setMessage(R.string.have_root)
+                            .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
 
                     readDB(sdb);
-                    Toast.makeText(MainActivity.this, "The database is loaded!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.is_loaded, Toast.LENGTH_SHORT).show();
                 }
                 pd.cancel();
             }

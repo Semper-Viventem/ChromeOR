@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">ChromeOR</string>
     <string name="action_settings">Settings</string>
+    <string name="login">Login...</string>
+    <string name="get_database">Get database...</string>
+    <string name="oh_no">Oh no!</string>
+    <string name="have_root">Are you sure that you have root?</string>
+    <string name="close">Close</string>
+    <string name="is_loaded">The database is loaded!</string>
 </resources>
