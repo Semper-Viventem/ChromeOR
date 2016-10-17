@@ -113,7 +113,7 @@ public class Div {
                 passwordEditText.setText(password_value);
 
                 builderdialog.setView(view);
-                builderdialog.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                builderdialog.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Ничего
