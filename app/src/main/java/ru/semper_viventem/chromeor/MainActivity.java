@@ -104,20 +104,23 @@ public class MainActivity extends AppCompatActivity {
                 super.onPostExecute(result);
 
                 if (exitCode == 255) {
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setTitle(R.string.oh_no)
-                            .setMessage(R.string.have_root)
-                            .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .show();
+                    Dialog.showDialog(
+                            MainActivity.this,
+                            getString(R.string.oh_no),
+                            getString(R.string.have_root));
                 } else {
 
-                    readDB(sdb);
-                    Toast.makeText(MainActivity.this, R.string.is_loaded, Toast.LENGTH_SHORT).show();
+                    try {
+                        readDB(sdb);
+                        Toast.makeText(MainActivity.this, R.string.is_loaded, Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Dialog.showDialog(
+                                MainActivity.this,
+                                getString(R.string.oh_no),
+                                getString(R.string.unknow_error));
+                    }
                 }
+
                 pd.cancel();
             }
         };
@@ -140,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
             final String password_value = new String(blob);
 
             Div div = new Div(MainActivity.this, action_url, origin_url, username_value, password_value);
-
             contenner.addView(div.getThisContanner());
         }
 

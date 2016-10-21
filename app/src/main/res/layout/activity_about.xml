@@ -16,6 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autoLink="web|email"
-        android:text="A small program to view passwords from Google Chrome\n\n© Kulikov Konstantin\nsemper-viventem.ru\nkostyaxxx8@gmail.com\n\n2016"/>
+        android:text="@string/about_text"/>
 
 </RelativeLayout>

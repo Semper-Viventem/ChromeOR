@@ -7,4 +7,11 @@
     <string name="have_root">Are you sure that you have root?</string>
     <string name="close">Close</string>
     <string name="is_loaded">The database is loaded!</string>
+    <string name="error">error!</string>
+    <string name="unknow_error">There was some kind of mistake. Make sure that you have installed Google Chrome, you have Root. Perhaps setting busyBox change the situation.</string>
+    <string name="about_text">A small program to view passwords from Google Chrome\n\n© Kulikov Konstantin\nsemper-viventem.ru\nkostyaxxx8@gmail.com\n\n2016</string>
+    <string name="user_name" translatable="false">User_name:</string>
+    <string name="acction_url" translatable="false">Acction_url:</string>
+    <string name="origin_url" translatable="false">Origin_url:</string>
+    <string name="password" translatable="false">Password:</string>
 </resources>
