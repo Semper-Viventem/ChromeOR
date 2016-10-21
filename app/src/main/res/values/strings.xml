@@ -14,4 +14,5 @@
     <string name="acction_url" translatable="false">Acction_url:</string>
     <string name="origin_url" translatable="false">Origin_url:</string>
     <string name="password" translatable="false">Password:</string>
+    <string name="about">About</string>
 </resources>

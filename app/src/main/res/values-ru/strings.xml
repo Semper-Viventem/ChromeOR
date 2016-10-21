@@ -11,4 +11,5 @@
     <string name="oh_no">Какой ужас!</string>
     <string name="unknow_error">Похоже, что произошла какая-то ошибка. Пожалуйста убедитесь, что у вас есть root-доступ и установлен Google Chrome актуальной версии. Возможно, установка BusyBox изменит ситуацию. Да поможет вам root! :)</string>
     <string name="about_text">ChromeOR - небольшая утилита для извлечения паролей из Google Chrome\n\n© Kulikov Konstantin\nsemper-viventem.ru\nkostyaxxx8@gmail.com\n\n2016</string>
+    <string name="about">Информация</string>
 </resources>
