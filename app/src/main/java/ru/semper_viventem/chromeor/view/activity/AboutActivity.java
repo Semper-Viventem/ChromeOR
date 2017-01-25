@@ -1,11 +1,11 @@
-package ru.semper_viventem.chromeor;
+package ru.semper_viventem.chromeor.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.analytics.HitBuilders;
+
+import ru.semper_viventem.chromeor.R;
 
 public class AboutActivity extends AppCompatActivity {
 

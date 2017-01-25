@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorCrystal"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    android:clickable="true"
+    tools:background="@color/colorBackground">
+
+    <LinearLayout
+        android:id="@+id/vBodyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:background="@drawable/holder_background"
+        android:padding="10dp"
+        android:elevation="3dp">
+
+        <TextView
+            android:id="@+id/vTextViewActionUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/holder_login_action"/>
+
+        <TextView
+            android:id="@+id/vTextViewOriginUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/holder_login_list_origin"/>
+
+        <TextView
+            android:id="@+id/vTextViewUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/holder_login_username"/>
+
+        <TextView
+            android:id="@+id/vTextViewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/holder_login_password"/>
+
+        <ImageButton
+            android:id="@+id/vImageButtonShare"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/colorCrystal"
+            android:src="@mipmap/ic_share_black_24dp"/>
+
+    </LinearLayout>
+</RelativeLayout>
