@@ -2,7 +2,6 @@ package ru.semper_viventem.chromeor.view.dialog
 
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
 import android.widget.TextView
 import com.pawegio.kandroid.find
@@ -25,7 +24,7 @@ class DialogManager(
         AlertDialog.Builder(mContext)
                 .setTitle(title)
                 .setMessage(text)
-                .setPositiveButton(R.string.close, DialogInterface.OnClickListener { dialog, which -> })
+                .setPositiveButton(R.string.close, { dialog, which -> })
                 .show()
     }
 
