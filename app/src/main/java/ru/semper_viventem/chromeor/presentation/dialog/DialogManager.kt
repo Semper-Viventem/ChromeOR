@@ -1,4 +1,4 @@
-package ru.semper_viventem.chromeor.view.dialog
+package ru.semper_viventem.chromeor.presentation.dialog
 
 import android.app.ProgressDialog
 import android.content.Context

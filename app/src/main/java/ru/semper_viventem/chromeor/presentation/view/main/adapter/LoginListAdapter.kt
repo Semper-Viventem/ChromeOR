@@ -1,4 +1,4 @@
-package ru.semper_viventem.chromeor.view.adapter
+package ru.semper_viventem.chromeor.presentation.view.main.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -11,7 +11,6 @@ import com.pawegio.kandroid.find
 import com.pawegio.kandroid.inflateLayout
 import ru.semper_viventem.chromeor.R
 import ru.semper_viventem.chromeor.model.LoginEntity
-import ru.semper_viventem.chromeor.view.activity.MainActivity.SelectLoginModelListener
 
 /**
  * @author Kulikov Konstantin
@@ -21,10 +20,21 @@ class LoginListAdapter(
         val mSelectLoginModelListener: SelectLoginModelListener
     ) : RecyclerView.Adapter<LoginListAdapter.LoginViwHolder>() {
 
+    var mMainData: List<LoginEntity> = emptyList()
     var mData: List<LoginEntity> = emptyList()
 
     fun setData(loginEntityList: List<LoginEntity>) {
         mData = loginEntityList
+        mMainData = loginEntityList
+        notifyDataSetChanged()
+    }
+
+    fun setSearchQuery(query: String) {
+        mData = mMainData.filter { (it.originUrl.contains(query) ||
+                    it.actionUrl.contains(query) ||
+                    it.passwordValue.contains(query)) ||
+                    it.usernameValue.contains(query)}
+
         notifyDataSetChanged()
     }
 
@@ -57,5 +67,10 @@ class LoginListAdapter(
                 selectListener.onLoginModelSelected(loginEntity)
             }
         }
+    }
+
+    interface SelectLoginModelListener {
+        fun onLoginModelSelected(loginEntity: LoginEntity)
+        fun onShareButtonClicked(loginEntity: LoginEntity)
     }
 }

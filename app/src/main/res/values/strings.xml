@@ -5,6 +5,7 @@
     <!--Navigation-->
     <string name="close">Close</string>
     <string name="about">About</string>
+    <string name="search">Search</string>
 
     <!--About Activity-->
     <string name="about_text">A small program to view passwords from Google Chrome\n\n© Kulikov Konstantin\nsemper-viventem.ru\nkostyaxxx8@gmail.com\n\n2016</string>
@@ -30,4 +31,12 @@
     <string name="holder_login_list_origin" translatable="false">origin_url : %s</string>
     <string name="holder_login_username" translatable="false"   >username   : %s</string>
     <string name="holder_login_password" translatable="false"   >password   : %s</string>
+
+    <!--Tracker-->
+    <string name="tracker_onError" translatable="false">orror of getting password list =(</string>
+    <string name="tracker_onError_title" translatable="false">onError</string>
+    <string name="tracker_onComplite_title" translatable="false">getPass</string>
+    <string name="tracker_onComplite" translatable="false">getting password list</string>
+    <string name="tracker_activity_title" translatable="false">MainActivity</string>
+    <string name="tracker_not_root" translatable="false">not root</string>
 </resources>

@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name="ru.semper_viventem.chromeor.presentation.view.main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.AboutActivity" />
+        <activity android:name="ru.semper_viventem.chromeor.presentation.view.about.AboutActivity" />
     </application>
 
 </manifest>

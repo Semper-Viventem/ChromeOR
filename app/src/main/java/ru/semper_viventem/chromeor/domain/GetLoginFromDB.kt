@@ -56,6 +56,7 @@ class GetLoginFromDB(
                 }
                 cursor.close()
             } catch (e: Exception) {
+                e.printStackTrace()
                 subscriber.onError(e)
             }
 
