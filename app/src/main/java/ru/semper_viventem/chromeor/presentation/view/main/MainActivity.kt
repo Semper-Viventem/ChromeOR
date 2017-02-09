@@ -139,15 +139,13 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query == null) return true
-
-                mAdapter.setSearchQuery(query)
+                mMainPresenter.searchFromList(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText == null) return true
-
-                mAdapter.setSearchQuery(newText)
+                mMainPresenter.searchFromList(newText)
                 return false
             }
 

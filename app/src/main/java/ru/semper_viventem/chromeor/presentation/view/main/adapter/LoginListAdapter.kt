@@ -29,15 +29,6 @@ class LoginListAdapter(
         notifyDataSetChanged()
     }
 
-    fun setSearchQuery(query: String) {
-        mData = mMainData.filter { (it.originUrl.contains(query) ||
-                    it.actionUrl.contains(query) ||
-                    it.passwordValue.contains(query)) ||
-                    it.usernameValue.contains(query)}
-
-        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoginViwHolder {
         return LoginViwHolder(parent.context.inflateLayout(R.layout.holder_login_list, attachToRoot = false),
                 mSelectLoginModelListener, parent.context)
