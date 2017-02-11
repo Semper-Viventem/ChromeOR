@@ -14,22 +14,15 @@ import android.view.View
 import android.widget.ImageView
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
-import com.google.android.gms.analytics.HitBuilders
-import com.google.android.gms.analytics.Tracker
 import com.pawegio.kandroid.find
 import ru.semper_viventem.chromeor.R
-import ru.semper_viventem.chromeor.model.LoginEntity
 import ru.semper_viventem.chromeor.presentation.dialog.DialogManager
+import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import ru.semper_viventem.chromeor.presentation.presenter.MainPresenter
 import ru.semper_viventem.chromeor.presentation.view.about.AboutActivity
 import ru.semper_viventem.chromeor.presentation.view.main.adapter.LoginListAdapter
-import ru.semper_viventem.chromeor.util.AnalyticsApplication
 
 class MainActivity : MvpAppCompatActivity(), MainView {
-
-    companion object {
-        lateinit var mTracker: Tracker
-    }
 
     lateinit var mAdapter: LoginListAdapter
     lateinit var mDialogManager: DialogManager
@@ -42,6 +35,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         setContentView(R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
+
+        val fab = findViewById(R.id.fab) as FloatingActionButton
+        fab.setOnClickListener {
+            mMainPresenter.loadDatabase()
+        }
 
         mDialogManager = DialogManager(this)
 
@@ -74,22 +72,13 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         find<RecyclerView>(R.id.vRecyclerView).adapter = mAdapter
         find<RecyclerView>(R.id.vRecyclerView).layoutManager = LinearLayoutManager(this)
 
-        //google analytics
-        val application = application as AnalyticsApplication
-        mTracker = application.defaultTracker
+
     }
 
     override fun onResume() {
         super.onResume()
 
-        mTracker.setScreenName(getString(R.string.tracker_activity_title))
-        mTracker.send(HitBuilders.ScreenViewBuilder().build())
-
-
-        val fab = findViewById(R.id.fab) as FloatingActionButton
-        fab.setOnClickListener {
-            mMainPresenter.loadDatabase(application)
-        }
+        mMainPresenter.trackerOpenActivity()
     }
 
 
@@ -98,10 +87,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         mDialogManager.hideProgressDialog()
         find<ImageView>(R.id.vImageView).visibility = View.GONE
 
-        mTracker.send(HitBuilders.EventBuilder()
-                .setCategory(getString(R.string.tracker_onComplite_title))
-                .setAction(getString(R.string.tracker_onComplite))
-                .build())
     }
 
     override fun onBeginLoadingDB() {
@@ -112,20 +97,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         mDialogManager.hideProgressDialog()
         mDialogManager.showInformationDialog(getString(R.string.oh_no), getString(R.string.unknow_error))
 
-        mTracker.send(HitBuilders.EventBuilder()
-                .setCategory(getString(R.string.tracker_onError_title))
-                .setAction(getString(R.string.tracker_onError))
-                .build())
     }
 
     override fun onErrorCopyrateDB() {
         mDialogManager.hideProgressDialog()
         mDialogManager.showInformationDialog(getString(R.string.oh_no), getString(R.string.have_root))
-
-        mTracker.send(HitBuilders.EventBuilder()
-                .setCategory(getString(R.string.tracker_onError_title))
-                .setAction(getString(R.string.tracker_not_root))
-                .build())
     }
 
 

@@ -58,6 +58,11 @@ dependencies {
     kapt 'com.arello-mobile:moxy-compiler:1.4.5'
     compile "com.arello-mobile:moxy-android:1.4.5"
     compile "com.arello-mobile:moxy-app-compat:1.4.5"
+
+    // Dagger 2
+    compile "com.google.dagger:dagger:2.7"
+    kapt "com.google.dagger:dagger-compiler:2.7"
+    provided "org.glassfish:javax.annotation:10.0-b28"
 }
 
 apply plugin: 'com.google.gms.google-services'

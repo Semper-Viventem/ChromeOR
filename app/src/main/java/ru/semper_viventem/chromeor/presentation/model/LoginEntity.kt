@@ -1,4 +1,4 @@
-package ru.semper_viventem.chromeor.model
+package ru.semper_viventem.chromeor.presentation.model
 
 /**
  * @author Kulikov Konstantin

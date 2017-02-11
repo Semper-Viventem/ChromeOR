@@ -39,4 +39,5 @@
     <string name="tracker_onComplite" translatable="false">getting password list</string>
     <string name="tracker_activity_title" translatable="false">MainActivity</string>
     <string name="tracker_not_root" translatable="false">not root</string>
+    <string name="tracker_about_activity_title">About</string>
 </resources>

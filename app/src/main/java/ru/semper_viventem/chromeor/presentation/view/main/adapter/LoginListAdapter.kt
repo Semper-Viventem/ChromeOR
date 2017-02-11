@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.pawegio.kandroid.find
 import com.pawegio.kandroid.inflateLayout
 import ru.semper_viventem.chromeor.R
-import ru.semper_viventem.chromeor.model.LoginEntity
+import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 
 /**
  * @author Kulikov Konstantin

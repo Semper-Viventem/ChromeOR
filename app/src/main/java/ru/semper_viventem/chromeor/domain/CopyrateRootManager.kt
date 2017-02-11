@@ -27,7 +27,7 @@ class CopyrateRootManager(
                 "chmod 777 /data/user/0/$packageName/databases/login_data.db \n"
     }
 
-    override fun exequte(subscriber: Subscriber<Int>) {
+    override fun execute(subscriber: Subscriber<Int>) {
         Observable.create<Int> { subscriber ->
 
             val p: Process

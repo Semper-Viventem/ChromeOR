@@ -12,5 +12,5 @@ interface CopyrateRoot {
         val NO_ROOT = 255
     }
 
-    fun exequte(subscribe: Subscriber<Int>)
+    fun execute(subscribe: Subscriber<Int>)
 }

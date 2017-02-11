@@ -3,13 +3,14 @@ package ru.semper_viventem.chromeor.domain
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import ru.semper_viventem.chromeor.data.WorkDB
-import ru.semper_viventem.chromeor.model.LoginEntity
+import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import rx.Observable
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.io.File
 import java.util.*
+
 
 /**
  * @author Kulikov Konstantin
@@ -23,13 +24,13 @@ class GetLoginFromDB(
 
     init {
         val PACKAGE_NAME = context.packageName
-        val DB_DESTINATION = "/data/data/$PACKAGE_NAME/databases"
+        val DB_DESTINATION = "/data/data/$PACKAGE_NAME/databases/"
         val DB_NAME = "login_data.db"
         val DB_BASE_DEST = DB_DESTINATION + File.separator + DB_NAME
         mDbFile = File(DB_BASE_DEST)
     }
 
-    fun exequte(subscriber: Subscriber<List<LoginEntity>>) {
+    fun execute(subscriber: Subscriber<List<LoginEntity>>) {
         Observable.create<List<LoginEntity>> { subscriber ->
             val loginEntityList = ArrayList<LoginEntity>()
 

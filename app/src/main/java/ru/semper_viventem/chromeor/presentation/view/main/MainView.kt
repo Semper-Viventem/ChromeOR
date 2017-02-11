@@ -1,7 +1,7 @@
 package ru.semper_viventem.chromeor.presentation.view.main
 
 import com.arellomobile.mvp.MvpView
-import ru.semper_viventem.chromeor.model.LoginEntity
+import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 
 /**
  * @author Kulikov Konstantin
