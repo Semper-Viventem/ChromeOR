@@ -1,6 +1,5 @@
 package ru.semper_viventem.chromeor.presentation.view.main
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -50,29 +49,13 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             }
 
             override fun onShareButtonClicked(loginEntity: LoginEntity) {
-                val intent = Intent(Intent.ACTION_SEND)
-                intent.type = "text/plain"
-                val textToSend =
-                        "action_url: ${loginEntity.actionUrl}\n" +
-                        "origin_url: ${loginEntity.originUrl}\n" +
-                        "username: ${loginEntity.usernameValue}\n" +
-                        "password: ${loginEntity.passwordValue}"
-                intent.putExtra(Intent.EXTRA_TEXT, textToSend)
-
-                try {
-                    startActivity(Intent.createChooser(intent, "Share"))
-                } catch (ex: ActivityNotFoundException) {
-                    //TODO обработка ошибок
-                    ex.printStackTrace()
-                }
+                mMainPresenter.shareLoginData(loginEntity)
             }
         }
 
         mAdapter = LoginListAdapter(selectListener)
         find<RecyclerView>(R.id.vRecyclerView).adapter = mAdapter
         find<RecyclerView>(R.id.vRecyclerView).layoutManager = LinearLayoutManager(this)
-
-
     }
 
     override fun onResume() {
@@ -81,16 +64,15 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         mMainPresenter.trackerOpenActivity()
     }
 
+    override fun onBeginLoadingDB() {
+        mDialogManager.showProgressDialog(getString(R.string.login), getString(R.string.get_database))
+    }
 
     override fun onDatabaseLoaded(passList: List<LoginEntity>) {
         mAdapter.setData(passList)
         mDialogManager.hideProgressDialog()
         find<ImageView>(R.id.vImageView).visibility = View.GONE
 
-    }
-
-    override fun onBeginLoadingDB() {
-        mDialogManager.showProgressDialog(getString(R.string.login), getString(R.string.get_database))
     }
 
     override fun onErrorLoadingDB() {

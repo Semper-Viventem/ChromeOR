@@ -27,7 +27,6 @@ class AboutPresenter: MvpPresenter<AboutView>() {
     }
 
     fun trackerOpenActivity() {
-
         mTracker.setScreenName(mContext.resources.getString(R.string.tracker_about_activity_title))
         mTracker.send(HitBuilders.ScreenViewBuilder().build())
     }

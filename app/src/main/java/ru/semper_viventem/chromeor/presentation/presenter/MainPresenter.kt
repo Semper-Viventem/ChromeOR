@@ -1,6 +1,8 @@
 package ru.semper_viventem.chromeor.presentation.presenter
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.google.android.gms.analytics.HitBuilders
@@ -85,5 +87,23 @@ class MainPresenter: MvpPresenter<MainView>() {
                 .setCategory(mContext.resources.getString(R.string.tracker_onError_title))
                 .setAction(mContext.resources.getString(R.string.tracker_not_root))
                 .build())
+    }
+
+    fun shareLoginData(loginModel: LoginEntity) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        val textToSend =
+                "action_url: ${loginModel.actionUrl}\n" +
+                        "origin_url: ${loginModel.originUrl}\n" +
+                        "username: ${loginModel.usernameValue}\n" +
+                        "password: ${loginModel.passwordValue}"
+        intent.putExtra(Intent.EXTRA_TEXT, textToSend)
+
+        try {
+            mContext.startActivity(Intent.createChooser(intent, "Share"))
+        } catch (ex: ActivityNotFoundException) {
+            //TODO обработка ошибок
+            ex.printStackTrace()
+        }
     }
 }
