@@ -2,7 +2,10 @@ package ru.semper_viventem.chromeor.data.repository.chrome
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import ru.semper_viventem.chromeor.data.repository.WorkDB
+import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.action_url
+import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.origin_url
+import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.password_value
+import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.username_value
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import rx.Observable
 import java.io.DataOutputStream
@@ -74,7 +77,7 @@ class ChromeDataRepository @Inject constructor(
             try {
                 val sdb = SQLiteDatabase.openDatabase(mDbFile.path, null, 0)
 
-                val cursor = sdb.query("logins", arrayOf(WorkDB.action_url, WorkDB.origin_url, WorkDB.username_value, WorkDB.password_value),
+                val cursor = sdb.query("logins", arrayOf(action_url, origin_url, username_value, password_value),
                         null, null,
                         null, null, null)
 
@@ -83,11 +86,11 @@ class ChromeDataRepository @Inject constructor(
                 while (cursor.moveToNext()) {
                     val loginEntity = LoginEntity()
 
-                    loginEntity.actionUrl = cursor.getString(cursor.getColumnIndex(WorkDB.action_url))
-                    loginEntity.originUrl = cursor.getString(cursor.getColumnIndex(WorkDB.origin_url))
-                    loginEntity.usernameValue = cursor.getString(cursor.getColumnIndex(WorkDB.username_value))
+                    loginEntity.actionUrl = cursor.getString(cursor.getColumnIndex(action_url))
+                    loginEntity.originUrl = cursor.getString(cursor.getColumnIndex(origin_url))
+                    loginEntity.usernameValue = cursor.getString(cursor.getColumnIndex(username_value))
 
-                    val blob = cursor.getBlob(cursor.getColumnIndex(WorkDB.password_value))
+                    val blob = cursor.getBlob(cursor.getColumnIndex(password_value))
                     loginEntity.passwordValue = String(blob)
 
                     loginEntityList.add(loginEntity)
