@@ -8,8 +8,8 @@ android {
         applicationId "ru.semper_viventem.chromeor"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 7
-        versionName "1.5.1"
+        versionCode 8
+        versionName "1.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
