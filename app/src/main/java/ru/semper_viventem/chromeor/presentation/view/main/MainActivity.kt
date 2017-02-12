@@ -60,7 +60,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun onResume() {
         super.onResume()
-
         mMainPresenter.trackerOpenActivity()
     }
 
