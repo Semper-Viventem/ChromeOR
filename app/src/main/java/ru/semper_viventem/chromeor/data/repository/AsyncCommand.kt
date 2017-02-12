@@ -1,4 +1,4 @@
-package ru.semper_viventem.chromeor.data
+package ru.semper_viventem.chromeor.data.repository
 
 import android.content.Context
 import android.os.AsyncTask

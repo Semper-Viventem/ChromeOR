@@ -1,13 +1,14 @@
 package ru.semper_viventem.chromeor.util
 
 import android.app.Application
-import com.google.android.gms.analytics.Tracker
 import ru.semper_viventem.chromeor.di.component.AppComponent
+import ru.semper_viventem.chromeor.di.component.DaggerAppComponent
 import ru.semper_viventem.chromeor.di.module.AppModule
+import ru.semper_viventem.chromeor.di.module.DataModule
 
 /**
- * This is a subclass of [Application] used to provide shared objects for this app, such as
- * the [Tracker].
+ * @author Kulikov Konstantin
+ * @since 11.02.2017
  */
 class App : Application() {
 
@@ -22,6 +23,7 @@ class App : Application() {
 
         component = DaggerAppComponent.builder()
                 .appModule(AppModule(this, this))
+                .dataModule(DataModule())
                 .build()
     }
 }
