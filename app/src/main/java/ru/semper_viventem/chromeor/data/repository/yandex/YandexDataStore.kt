@@ -1,21 +1,21 @@
-package ru.semper_viventem.chromeor.data.repository.chrome
+package ru.semper_viventem.chromeor.data.repository.yandex
 
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import rx.Observable
 
 /**
  * @author Kulikov Konstantin
- * @since 12.02.2017.
+ * @since 15.02.2017.
  */
-interface ChromeDataStore {
+interface YandexDataStore {
     companion object {
         val origin_url = "origin_url"
         val action_url = "action_url"
         val username_value = "username_value"
         val password_value = "password_value"
 
-        val DB_PACKAGE = "com.android.chrome"
-        val DB_NAME = "c_login_data.db"
+        val DB_PACKAGE = "com.yandex.browser"
+        val DB_NAME = "y_login_data.db"
     }
 
     fun copyData(): Observable<Int>

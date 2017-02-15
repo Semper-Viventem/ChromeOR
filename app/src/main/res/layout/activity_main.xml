@@ -23,12 +23,28 @@
 
     <include layout="@layout/content_main" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_media_play" />
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/fab_margin">
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/chrome" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabYa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/fab"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@drawable/yandex" />
+
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

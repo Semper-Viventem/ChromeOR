@@ -1,13 +1,13 @@
-package ru.semper_viventem.chromeor.data.repository.chrome
+package ru.semper_viventem.chromeor.data.repository.yandex
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.DB_NAME
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.DB_PACKAGE
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.action_url
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.origin_url
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.password_value
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.username_value
+import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.DB_NAME
+import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.DB_PACKAGE
+import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.action_url
+import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.origin_url
+import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.password_value
+import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.username_value
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import rx.Observable
 import java.io.DataOutputStream
@@ -15,14 +15,16 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * @author Kulikov Konstantin
- * @since 12.02.2017.
+ * @since 15.02.2017.
  */
-class ChromeDataRepository @Inject constructor(
+@Singleton
+class YandexDataRepository @Inject constructor(
         private val mContext: Context
-): ChromeDataStore {
+) : YandexDataStore {
 
     override fun copyData(): Observable<Int> {
         val packageName = mContext.packageName
@@ -64,7 +66,6 @@ class ChromeDataRepository @Inject constructor(
             subscriber.onNext(exitCode)
         }
     }
-
 
     override fun getData(): Observable<List<LoginEntity>> {
         val PACKAGE_NAME = mContext.packageName

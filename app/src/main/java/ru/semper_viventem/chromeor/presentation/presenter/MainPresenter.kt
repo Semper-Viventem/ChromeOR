@@ -9,7 +9,9 @@ import com.google.android.gms.analytics.HitBuilders
 import com.google.android.gms.analytics.Tracker
 import ru.semper_viventem.chromeor.R
 import ru.semper_viventem.chromeor.domain.iteractor.CopyrateChromeDatabase
+import ru.semper_viventem.chromeor.domain.iteractor.CopyrateYandexDatabase
 import ru.semper_viventem.chromeor.domain.iteractor.GetChromeDatabase
+import ru.semper_viventem.chromeor.domain.iteractor.GetYandexDatabase
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import ru.semper_viventem.chromeor.presentation.view.main.MainView
 import ru.semper_viventem.chromeor.util.App
@@ -28,10 +30,16 @@ class MainPresenter: MvpPresenter<MainView>() {
     lateinit var mTracker: Tracker
     @Inject
     lateinit var mContext: Context
+
     @Inject
     lateinit var mCopyrateChromeDatabase: CopyrateChromeDatabase
     @Inject
     lateinit var mGetChromeDatabase: GetChromeDatabase
+
+    @Inject
+    lateinit var mCopyrateYandexDatabase: CopyrateYandexDatabase
+    @Inject
+    lateinit var mGetYandexDatabase: GetYandexDatabase
 
     private var mLoginList: List<LoginEntity> = emptyList()
 
@@ -39,10 +47,30 @@ class MainPresenter: MvpPresenter<MainView>() {
         App.component.inject(this)
     }
 
-    fun loadDatabase() {
+    fun loadChromeData() {
         mCopyrateChromeDatabase.execute(subscriber<Int>()
                 .onNext { exitCode ->
                     mGetChromeDatabase.execute(subscriber<List<LoginEntity>>()
+                            .onNext { loginEntityList ->
+                                mLoginList = loginEntityList
+                                viewState.onDatabaseLoaded(mLoginList)
+                                trackerOnDBLoaded()
+                            }
+                            .onError {
+                                viewState.onErrorLoadingDB()
+                                trackerOnErrorLoaded()
+                            })
+                }
+                .onError {
+                    viewState.onErrorCopyrateDB()
+                    trackerOnErrorCopyrateDB()
+                })
+    }
+
+    fun loadYandexData() {
+        mCopyrateYandexDatabase.execute(subscriber<Int>()
+                .onNext { exitCode ->
+                    mGetYandexDatabase.execute(subscriber<List<LoginEntity>>()
                             .onNext { loginEntityList ->
                                 mLoginList = loginEntityList
                                 viewState.onDatabaseLoaded(mLoginList)

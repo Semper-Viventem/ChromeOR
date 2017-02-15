@@ -2,7 +2,10 @@ package ru.semper_viventem.chromeor.presentation.dialog
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AlertDialog
+import android.widget.ImageButton
 import android.widget.TextView
 import com.pawegio.kandroid.find
 import com.pawegio.kandroid.inflateLayout
@@ -48,13 +51,19 @@ class DialogManager(
         view.find<TextView>(R.id.originEditText).text = loginEntity.originUrl
         view.find<TextView>(R.id.usernameEditText).text = loginEntity.usernameValue
         view.find<TextView>(R.id.passwordEditText).text = loginEntity.passwordValue
+        view.find<ImageButton>(R.id.vButtonNext).setOnClickListener {
+            val inBrowserIntent = Intent(Intent.ACTION_VIEW)
+            inBrowserIntent.data = Uri.parse(loginEntity.originUrl)
+            mContext.startActivity(inBrowserIntent)
+        }
 
         builderdialog.setView(view)
         builderdialog.setPositiveButton(R.string.close) { dialog, which ->
             //TODO что-то
         }
 
-        builderdialog.create()
+        builderdialog
+                .create()
                 .show()
     }
 

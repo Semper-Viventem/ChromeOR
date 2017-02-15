@@ -37,7 +37,12 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
-            mMainPresenter.loadDatabase()
+            mMainPresenter.loadChromeData()
+        }
+
+        val fabYa = findViewById(R.id.fabYa) as FloatingActionButton
+        fabYa.setOnClickListener {
+            mMainPresenter.loadYandexData()
         }
 
         mDialogManager = DialogManager(this)
