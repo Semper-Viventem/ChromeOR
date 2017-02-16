@@ -28,7 +28,7 @@ class YandexDataRepository @Inject constructor(
 
     override fun copyData(): Observable<Int> {
         val packageName = mContext.packageName
-        val COMAND = "cat /data/data/$DB_PACKAGE/app_chrome/Default/Login\\ Data > /data/data/$packageName/databases/$DB_NAME \n" +
+        val COMAND = "cat $DB_PACKAGE > /data/data/$packageName/databases/$DB_NAME \n" +
                 "chmod 777 /data/data/$packageName/databases/$DB_NAME \n" +
                 "chmod 777 /data/user/0/$packageName/databases/$DB_NAME \n"
         val NOT_ROOT = 255
@@ -68,10 +68,9 @@ class YandexDataRepository @Inject constructor(
     }
 
     override fun getData(): Observable<List<LoginEntity>> {
-        val PACKAGE_NAME = mContext.packageName
-        val DB_DESTINATION = "/data/data/$PACKAGE_NAME/databases/"
+        val DB_DESTINATION = mContext.applicationInfo.dataDir + "/databases/"
         val DB_BASE_DEST = DB_DESTINATION + File.separator + DB_NAME
-        var mDbFile: File = File(DB_BASE_DEST)
+        val mDbFile: File = File(DB_BASE_DEST)
 
         return Observable.create<List<LoginEntity>> { subscriber ->
             val loginEntityList = ArrayList<LoginEntity>()

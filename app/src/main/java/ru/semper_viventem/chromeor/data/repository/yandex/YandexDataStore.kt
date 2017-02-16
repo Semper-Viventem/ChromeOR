@@ -14,7 +14,7 @@ interface YandexDataStore {
         val username_value = "username_value"
         val password_value = "password_value"
 
-        val DB_PACKAGE = "com.yandex.browser"
+        val DB_PACKAGE = "/data/data/com.yandex.browser/app_chromium/Default/Login\\ Data"
         val DB_NAME = "y_login_data.db"
     }
 
