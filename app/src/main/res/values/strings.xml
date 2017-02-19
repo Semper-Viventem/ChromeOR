@@ -11,8 +11,8 @@
     <string name="about_text">A small program to view passwords from Google Chrome\n\n© Kulikov Konstantin\nsemper-viventem.ru\nkostyaxxx8@gmail.com\n\n2016</string>
 
     <!--Dialog login-->
-    <string name="login">Login...</string>
-    <string name="get_database">Get database...</string>
+    <string name="login">Loading…</string>
+    <string name="get_database">Get database…</string>
     <string name="oh_no">Oh no!</string>
     <string name="have_root">Are you sure that you have root?</string>
     <string name="is_loaded">The database is loaded!</string>
@@ -35,7 +35,7 @@
     <!--Tracker-->
     <string name="tracker_onError" translatable="false">orror of getting password list =(</string>
     <string name="tracker_onError_title" translatable="false">onError</string>
-    <string name="tracker_onComplite_title" translatable="false">getPass</string>
+    <string name="tracker_onComplite_title" translatable="false">onCompleted</string>
     <string name="tracker_onComplite" translatable="false">getting password list</string>
     <string name="tracker_activity_title" translatable="false">MainActivity</string>
     <string name="tracker_not_root" translatable="false">not root</string>

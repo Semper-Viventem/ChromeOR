@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/fab"
             android:layout_marginRight="10dp"
-            app:srcCompat="@drawable/yandex" />
+            app:srcCompat="@drawable/chrome_beta" />
 
     </RelativeLayout>
 

@@ -8,10 +8,10 @@ import com.arellomobile.mvp.MvpPresenter
 import com.google.android.gms.analytics.HitBuilders
 import com.google.android.gms.analytics.Tracker
 import ru.semper_viventem.chromeor.R
+import ru.semper_viventem.chromeor.domain.iteractor.CopyrateChromeBetaDatabase
 import ru.semper_viventem.chromeor.domain.iteractor.CopyrateChromeDatabase
-import ru.semper_viventem.chromeor.domain.iteractor.CopyrateYandexDatabase
+import ru.semper_viventem.chromeor.domain.iteractor.GetChromeBetaDatabase
 import ru.semper_viventem.chromeor.domain.iteractor.GetChromeDatabase
-import ru.semper_viventem.chromeor.domain.iteractor.GetYandexDatabase
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import ru.semper_viventem.chromeor.presentation.view.main.MainView
 import ru.semper_viventem.chromeor.util.App
@@ -37,9 +37,9 @@ class MainPresenter: MvpPresenter<MainView>() {
     lateinit var mGetChromeDatabase: GetChromeDatabase
 
     @Inject
-    lateinit var mCopyrateYandexDatabase: CopyrateYandexDatabase
+    lateinit var mCopyrateChromeBetaDatabase: CopyrateChromeBetaDatabase
     @Inject
-    lateinit var mGetYandexDatabase: GetYandexDatabase
+    lateinit var mGetChromeBetaDatabase: GetChromeBetaDatabase
 
     private var mLoginList: List<LoginEntity> = emptyList()
 
@@ -48,6 +48,7 @@ class MainPresenter: MvpPresenter<MainView>() {
     }
 
     fun loadChromeData() {
+        viewState.onBeginLoadingDB()
         mCopyrateChromeDatabase.execute(subscriber<Int>()
                 .onNext { exitCode ->
                     mGetChromeDatabase.execute(subscriber<List<LoginEntity>>()
@@ -67,10 +68,11 @@ class MainPresenter: MvpPresenter<MainView>() {
                 })
     }
 
-    fun loadYandexData() {
-        mCopyrateYandexDatabase.execute(subscriber<Int>()
+    fun loadChromeBetaDataba() {
+        viewState.onBeginLoadingDB()
+        mCopyrateChromeBetaDatabase.execute(subscriber<Int>()
                 .onNext { exitCode ->
-                    mGetYandexDatabase.execute(subscriber<List<LoginEntity>>()
+                    mGetChromeBetaDatabase.execute(subscriber<List<LoginEntity>>()
                             .onNext { loginEntityList ->
                                 mLoginList = loginEntityList
                                 viewState.onDatabaseLoaded(mLoginList)

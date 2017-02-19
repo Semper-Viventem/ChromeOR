@@ -42,7 +42,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
         val fabYa = findViewById(R.id.fabYa) as FloatingActionButton
         fabYa.setOnClickListener {
-            mMainPresenter.loadYandexData()
+            mMainPresenter.loadChromeBetaDataba()
         }
 
         mDialogManager = DialogManager(this)

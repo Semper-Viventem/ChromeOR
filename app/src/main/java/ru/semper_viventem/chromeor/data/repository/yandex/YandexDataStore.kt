@@ -15,7 +15,7 @@ interface YandexDataStore {
         val password_value = "password_value"
 
         val DB_PACKAGE = "/data/data/com.yandex.browser/app_chromium/Default/Login\\ Data"
-        val DB_NAME = "y_login_data.db"
+        val DB_NAME = "yandex_login_data.db"
     }
 
     fun copyData(): Observable<Int>

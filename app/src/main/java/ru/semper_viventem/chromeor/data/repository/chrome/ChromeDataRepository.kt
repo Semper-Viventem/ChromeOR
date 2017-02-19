@@ -15,20 +15,19 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * @author Kulikov Konstantin
  * @since 12.02.2017.
  */
+@Singleton
 class ChromeDataRepository @Inject constructor(
         private val mContext: Context
 ): ChromeDataStore {
 
     override fun copyData(): Observable<Int> {
-        val packageName = mContext.packageName
-        val COMAND = "cat $DB_PACKAGE > /data/data/$packageName/databases/$DB_NAME \n" +
-                "chmod 777 /data/data/$packageName/databases/$DB_NAME \n" +
-                "chmod 777 /data/user/0/$packageName/databases/$DB_NAME \n"
+        val COMMAND = "cat $DB_PACKAGE > ${mContext.applicationInfo.dataDir}/databases/$DB_NAME \n"
         val NOT_ROOT = 255
 
         return Observable.create<Int> { subscriber ->
@@ -42,7 +41,7 @@ class ChromeDataRepository @Inject constructor(
 
                 // Attempt to write a file to a root-only
                 val os = DataOutputStream(p.outputStream)
-                os.writeBytes(COMAND + " \n")
+                os.writeBytes(COMMAND + " \n")
 
                 // Close the terminal
                 os.writeBytes("exit\n")
@@ -83,7 +82,7 @@ class ChromeDataRepository @Inject constructor(
 
                 cursor.moveToFirst()
 
-                while (cursor.moveToNext()) {
+                while (cursor.position < cursor.count) {
                     val loginEntity = LoginEntity()
 
                     loginEntity.actionUrl = cursor.getString(cursor.getColumnIndex(action_url))
@@ -94,6 +93,8 @@ class ChromeDataRepository @Inject constructor(
                     loginEntity.passwordValue = String(blob)
 
                     loginEntityList.add(loginEntity)
+
+                    cursor.moveToNext()
                 }
                 cursor.close()
             } catch (e: Exception) {

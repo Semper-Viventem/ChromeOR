@@ -1,13 +1,13 @@
-package ru.semper_viventem.chromeor.data.repository.yandex
+package ru.semper_viventem.chromeor.data.repository.chrome_beta
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.DB_NAME
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.DB_PACKAGE
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.action_url
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.origin_url
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.password_value
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.username_value
+import ru.semper_viventem.chromeor.data.repository.chrome_beta.ChromeBetaDataStore.Companion.DB_NAME
+import ru.semper_viventem.chromeor.data.repository.chrome_beta.ChromeBetaDataStore.Companion.DB_PACKAGE
+import ru.semper_viventem.chromeor.data.repository.chrome_beta.ChromeBetaDataStore.Companion.action_url
+import ru.semper_viventem.chromeor.data.repository.chrome_beta.ChromeBetaDataStore.Companion.origin_url
+import ru.semper_viventem.chromeor.data.repository.chrome_beta.ChromeBetaDataStore.Companion.password_value
+import ru.semper_viventem.chromeor.data.repository.chrome_beta.ChromeBetaDataStore.Companion.username_value
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import rx.Observable
 import java.io.DataOutputStream
@@ -19,12 +19,12 @@ import javax.inject.Singleton
 
 /**
  * @author Kulikov Konstantin
- * @since 15.02.2017.
+ * @since 18.02.2017.
  */
 @Singleton
-class YandexDataRepository @Inject constructor(
+class ChromeBetaDataRepository @Inject constructor(
         private val mContext: Context
-) : YandexDataStore {
+): ChromeBetaDataStore {
 
     override fun copyData(): Observable<Int> {
         val COMMAND = "cat $DB_PACKAGE > ${mContext.applicationInfo.dataDir}/databases/$DB_NAME \n"
@@ -104,4 +104,5 @@ class YandexDataRepository @Inject constructor(
             subscriber.onNext(loginEntityList)
         }
     }
+
 }
