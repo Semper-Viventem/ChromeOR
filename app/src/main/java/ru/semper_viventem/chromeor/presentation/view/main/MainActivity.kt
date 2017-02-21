@@ -73,9 +73,9 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun onDatabaseLoaded(passList: List<LoginEntity>) {
-
         mAdapter.setData(passList)
         mDialogManager.hideProgressDialog()
+
         if (!passList.isEmpty())
             find<ImageView>(R.id.vImageView).visibility = View.GONE
 
