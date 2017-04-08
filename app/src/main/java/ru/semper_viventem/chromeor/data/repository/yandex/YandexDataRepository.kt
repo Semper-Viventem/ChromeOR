@@ -2,12 +2,13 @@ package ru.semper_viventem.chromeor.data.repository.yandex
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.DB_NAME
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.DB_PACKAGE
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.action_url
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.origin_url
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.password_value
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore.Companion.username_value
+import ru.semper_viventem.chromeor.domain.store.YandexDataStore
+import ru.semper_viventem.chromeor.domain.store.YandexDataStore.Companion.DB_NAME
+import ru.semper_viventem.chromeor.domain.store.YandexDataStore.Companion.DB_PACKAGE
+import ru.semper_viventem.chromeor.domain.store.YandexDataStore.Companion.action_url
+import ru.semper_viventem.chromeor.domain.store.YandexDataStore.Companion.origin_url
+import ru.semper_viventem.chromeor.domain.store.YandexDataStore.Companion.password_value
+import ru.semper_viventem.chromeor.domain.store.YandexDataStore.Companion.username_value
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import java.io.DataOutputStream
 import java.io.File

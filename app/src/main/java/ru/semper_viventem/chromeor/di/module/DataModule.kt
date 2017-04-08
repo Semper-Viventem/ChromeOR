@@ -3,11 +3,11 @@ package ru.semper_viventem.chromeor.di.module
 import dagger.Module
 import dagger.Provides
 import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataRepository
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore
 import ru.semper_viventem.chromeor.data.repository.chrome_beta.ChromeBetaDataRepository
-import ru.semper_viventem.chromeor.data.repository.chrome_beta.ChromeBetaDataStore
 import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataRepository
-import ru.semper_viventem.chromeor.data.repository.yandex.YandexDataStore
+import ru.semper_viventem.chromeor.domain.store.ChromeBetaDataStore
+import ru.semper_viventem.chromeor.domain.store.ChromeDataStore
+import ru.semper_viventem.chromeor.domain.store.YandexDataStore
 import javax.inject.Singleton
 
 /**

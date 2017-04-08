@@ -2,7 +2,7 @@ package ru.semper_viventem.chromeor.domain.iteractor
 
 import io.adev.rxwrapper.RxAdapter
 import io.reactivex.ObservableEmitter
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore
+import ru.semper_viventem.chromeor.domain.store.ChromeDataStore
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import javax.inject.Inject
 

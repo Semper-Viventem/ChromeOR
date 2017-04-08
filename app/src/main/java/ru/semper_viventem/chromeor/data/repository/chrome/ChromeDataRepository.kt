@@ -2,12 +2,13 @@ package ru.semper_viventem.chromeor.data.repository.chrome
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.DB_NAME
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.DB_PACKAGE
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.action_url
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.origin_url
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.password_value
-import ru.semper_viventem.chromeor.data.repository.chrome.ChromeDataStore.Companion.username_value
+import ru.semper_viventem.chromeor.domain.store.ChromeDataStore
+import ru.semper_viventem.chromeor.domain.store.ChromeDataStore.Companion.DB_NAME
+import ru.semper_viventem.chromeor.domain.store.ChromeDataStore.Companion.DB_PACKAGE
+import ru.semper_viventem.chromeor.domain.store.ChromeDataStore.Companion.action_url
+import ru.semper_viventem.chromeor.domain.store.ChromeDataStore.Companion.origin_url
+import ru.semper_viventem.chromeor.domain.store.ChromeDataStore.Companion.password_value
+import ru.semper_viventem.chromeor.domain.store.ChromeDataStore.Companion.username_value
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import java.io.DataOutputStream
 import java.io.File

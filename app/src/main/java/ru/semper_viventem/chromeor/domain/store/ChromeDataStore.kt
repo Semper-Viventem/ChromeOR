@@ -1,20 +1,20 @@
-package ru.semper_viventem.chromeor.data.repository.chrome_beta
+package ru.semper_viventem.chromeor.domain.store
 
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 
 /**
  * @author Kulikov Konstantin
- * @since 18.02.2017.
+ * @since 12.02.2017.
  */
-interface ChromeBetaDataStore {
+interface ChromeDataStore {
     companion object {
         val origin_url = "origin_url"
         val action_url = "action_url"
         val username_value = "username_value"
         val password_value = "password_value"
 
-        val DB_PACKAGE = "/data/data/com.chrome.beta/app_chrome/Default/Login\\ Data"
-        val DB_NAME = "chrome_beta_login_data.db"
+        val DB_PACKAGE = "/data/data/com.android.chrome/app_chrome/Default/Login\\ Data"
+        val DB_NAME = "chrome_login_data.db"
     }
 
     /**

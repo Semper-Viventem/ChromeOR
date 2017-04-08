@@ -1,20 +1,20 @@
-package ru.semper_viventem.chromeor.data.repository.yandex
+package ru.semper_viventem.chromeor.domain.store
 
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 
 /**
  * @author Kulikov Konstantin
- * @since 15.02.2017.
+ * @since 18.02.2017.
  */
-interface YandexDataStore {
+interface ChromeBetaDataStore {
     companion object {
         val origin_url = "origin_url"
         val action_url = "action_url"
         val username_value = "username_value"
         val password_value = "password_value"
 
-        val DB_PACKAGE = "/data/data/com.yandex.browser/app_chromium/Default/Login\\ Data"
-        val DB_NAME = "yandex_login_data.db"
+        val DB_PACKAGE = "/data/data/com.chrome.beta/app_chrome/Default/Login\\ Data"
+        val DB_NAME = "chrome_beta_login_data.db"
     }
 
     /**
