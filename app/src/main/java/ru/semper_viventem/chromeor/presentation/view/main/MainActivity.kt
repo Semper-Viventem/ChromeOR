@@ -1,16 +1,15 @@
 package ru.semper_viventem.chromeor.presentation.view.main
 
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.pawegio.kandroid.startActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import ru.semper_viventem.chromeor.R
 import ru.semper_viventem.chromeor.presentation.dialog.DialogManager
@@ -29,34 +28,31 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
-        setSupportActionBar(toolbar)
 
-        val fab = findViewById(R.id.fab) as FloatingActionButton
-        fab.setOnClickListener {
+        setContentView(R.layout.activity_main)
+        setSupportActionBar(vToolBar)
+
+        vFabChrome.setOnClickListener {
             mMainPresenter.loadChromeLoginList()
         }
 
-        val fabYa = findViewById(R.id.fabYa) as FloatingActionButton
-        fabYa.setOnClickListener {
+        vFabChromeBeta.setOnClickListener {
             mMainPresenter.loadChromeBetaLoginList()
         }
 
         mDialogManager = DialogManager(this)
 
-        val selectListener = object : LoginListAdapter.SelectLoginModelListener {
+        mAdapter = LoginListAdapter(object : LoginListAdapter.SelectLoginModelListener {
 
-            override fun onLoginModelSelected(loginEntity: LoginEntity) {
+            override fun onItemSelected(loginEntity: LoginEntity) {
                 mDialogManager.showLoginDetails(loginEntity)
             }
 
             override fun onShareButtonClicked(loginEntity: LoginEntity) {
                 mMainPresenter.shareLoginData(loginEntity)
             }
-        }
+        })
 
-        mAdapter = LoginListAdapter(selectListener)
         vRecyclerView.adapter = mAdapter
         vRecyclerView.layoutManager = LinearLayoutManager(this)
     }
@@ -124,7 +120,5 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
         return super.onOptionsItemSelected(item)
     }
-
-
 
 }

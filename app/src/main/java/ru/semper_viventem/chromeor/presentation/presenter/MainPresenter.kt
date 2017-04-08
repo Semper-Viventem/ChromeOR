@@ -136,11 +136,15 @@ class MainPresenter: MvpPresenter<MainView>() {
     fun shareLoginData(loginModel: LoginEntity) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
-        val textToSend =
-                "action_url: ${loginModel.actionUrl}\n" +
-                        "origin_url: ${loginModel.originUrl}\n" +
-                        "username: ${loginModel.usernameValue}\n" +
-                        "password: ${loginModel.passwordValue}"
+
+        val textToSend = mContext.getString(
+                R.string.share_text,
+                loginModel.actionUrl,
+                loginModel.originUrl,
+                loginModel.usernameValue,
+                loginModel.passwordValue
+        )
+
         intent.putExtra(Intent.EXTRA_TEXT, textToSend)
 
         try {

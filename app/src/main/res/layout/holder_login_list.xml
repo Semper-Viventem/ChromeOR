@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorCrystal"
+    android:background="@color/crystal"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
     android:paddingLeft="2dp"
@@ -50,8 +50,8 @@
             android:id="@+id/vImageButtonShare"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@color/colorCrystal"
+            android:background="@color/crystal"
+            style="@style/AppTheme.ImageButton"
             android:src="@mipmap/ic_share_black_24dp"/>
-
     </LinearLayout>
 </RelativeLayout>

@@ -40,4 +40,7 @@
     <string name="tracker_activity_title" translatable="false">MainActivity</string>
     <string name="tracker_not_root" translatable="false">not root</string>
     <string name="tracker_about_activity_title" translatable="false">About</string>
+
+    <!-- Share -->
+    <string name="share_text" translatable="false">action_url: %1$s\n origin_url: %2$s\n username:%3$s\n password: %4$s</string>
 </resources>
