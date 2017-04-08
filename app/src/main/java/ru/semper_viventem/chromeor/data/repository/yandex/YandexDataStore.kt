@@ -17,6 +17,18 @@ interface YandexDataStore {
         val DB_NAME = "yandex_login_data.db"
     }
 
+    /**
+     * Копирование БД
+     *
+     * @return код результата итерации [Int]
+     */
     fun copyData(): Int
+
+    /**
+     * Получить список пользовательских
+     * аккаунтов из БД
+     *
+     * @return список [List] аккаунтов пользователя [LoginEntity]
+     */
     fun getData(): List<LoginEntity>
 }

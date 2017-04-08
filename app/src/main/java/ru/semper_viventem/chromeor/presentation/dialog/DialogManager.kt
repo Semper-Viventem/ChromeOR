@@ -23,6 +23,12 @@ class DialogManager(
 
     var mProgressDialog: ProgressDialog = ProgressDialog(mContext)
 
+    /**
+     * Показать информационный диалог
+     *
+     * @param title заголовок [String]
+     * @param text сообщение [String]
+     */
     fun showInformationDialog(title: String, text: String) {
         AlertDialog.Builder(mContext)
                 .setTitle(title)
@@ -31,6 +37,12 @@ class DialogManager(
                 .show()
     }
 
+    /**
+     * Показать диалоговое окно с загрузкой
+     *
+     * @param title заголовок [String]
+     * @param text сообщение [String]
+     */
     fun showProgressDialog(title: String, text: String) {
         mProgressDialog.setTitle(title)
         mProgressDialog.setMessage(text)
@@ -39,10 +51,18 @@ class DialogManager(
         mProgressDialog.show()
     }
 
+    /**
+     * Скрыть диалог загрузки
+     */
     fun hideProgressDialog() {
         mProgressDialog.hide()
     }
 
+    /**
+     * Показать диалог с информацией об аккаунте
+     *
+     * @param loginEntity модель данных авторизации
+     */
     fun showLoginDetails(loginEntity: LoginEntity) {
         val builderdialog = AlertDialog.Builder(mContext)
         val view = mContext.inflateLayout(R.layout.dialog_edit, attachToRoot = false)

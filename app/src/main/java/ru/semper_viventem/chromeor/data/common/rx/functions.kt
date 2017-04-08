@@ -13,6 +13,12 @@ import io.reactivex.Scheduler
 val DEFAULT_OBSERVE_SCHEDULER: Scheduler = RxSchedulers().mainThread
 val DEFAULT_SUBSCRIBE_SCHEDULER: Scheduler = RxSchedulers().io
 
+/**
+ * Выполнить асинхронную итерацию через UseCase
+ *
+ * @param observableFactory сам вариант использования. Использовать [RxAdapter]
+ * @param observeScheduler поток в котором итерация выполняется. По умолчанию [DEFAULT_OBSERVE_SCHEDULER]
+ */
 fun <T, C> asyncUseCase(observableFactory: ObservableFactory<T, C>,
                         observeScheduler: Scheduler): UseCase<T, C> {
     return useCase(observableFactory,
@@ -20,6 +26,11 @@ fun <T, C> asyncUseCase(observableFactory: ObservableFactory<T, C>,
             subscribeScheduler = DEFAULT_SUBSCRIBE_SCHEDULER)
 }
 
+/**
+ * Выполнить асинхронную итерацию через UseCase
+ *
+ * @param observableFactory вариант использования. Использовать [RxAdapter]
+ */
 fun <T, C> asyncUseCase(observableFactory: ObservableFactory<T, C>): UseCase<T, C> {
     return useCase(observableFactory,
             observeScheduler = DEFAULT_OBSERVE_SCHEDULER,

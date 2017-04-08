@@ -44,10 +44,14 @@ class MainPresenter: MvpPresenter<MainView>() {
         App.component.inject(this)
     }
 
+    /**
+     * Загрузить список аккаунтов из Chrome
+     */
     fun loadChromeLoginList() {
         viewState.onBeginLoadingDB()
         asyncUseCase(mGetChromeLoginList).execute(observer({ loginList ->
-            viewState.onDatabaseLoaded(loginList)
+            mLoginList = loginList
+            viewState.onDatabaseLoaded(mLoginList)
             trackerOnDBLoaded()
         }, {
             viewState.onErrorLoadingDB()
@@ -55,16 +59,25 @@ class MainPresenter: MvpPresenter<MainView>() {
         }))
     }
 
+    /**
+     * Загрузить список аккаунтов из Chrome Beta
+     */
     fun loadChromeBetaLoginList() {
         viewState.onBeginLoadingDB()
         asyncUseCase(mGetChromeBetaLoginList).execute(observer({ loginList ->
-            viewState.onDatabaseLoaded(loginList)
+            mLoginList = loginList
+            viewState.onDatabaseLoaded(mLoginList)
         }, {
             viewState.onErrorLoadingDB()
             trackerOnErrorLoaded()
         }))
     }
 
+    /**
+     * Выборка элементов списка в зависимости от поискового запроса
+     *
+     * @param query поисковый запрос
+     */
     fun searchFromList(query: String) {
         val result = mLoginList.filter { (it.originUrl.contains(query) ||
                 it.actionUrl.contains(query) ||
@@ -73,11 +86,19 @@ class MainPresenter: MvpPresenter<MainView>() {
         viewState.onDatabaseLoaded(result)
     }
 
+    /**
+     * Трекер для статистики.
+     * Активность открыта
+     */
     fun trackerOpenActivity() {
         mTracker.setScreenName(mContext.resources.getString(R.string.tracker_activity_title))
         mTracker.send(HitBuilders.ScreenViewBuilder().build())
     }
 
+    /**
+     * Трекер для статистики.
+     * Список данных загружен успешно
+     */
     fun trackerOnDBLoaded() {
         mTracker.send(HitBuilders.EventBuilder()
                 .setCategory(mContext.resources.getString(R.string.tracker_onComplite_title))
@@ -85,6 +106,10 @@ class MainPresenter: MvpPresenter<MainView>() {
                 .build())
     }
 
+    /**
+     * Трекер для статистики.
+     * Ошибка при выгрузке данных
+     */
     fun trackerOnErrorLoaded() {
         mTracker.send(HitBuilders.EventBuilder()
                 .setCategory(mContext.resources.getString(R.string.tracker_onError_title))
@@ -92,6 +117,10 @@ class MainPresenter: MvpPresenter<MainView>() {
                 .build())
     }
 
+    /**
+     * Трекер для статистики.
+     * Ошибка при копировании БД
+     */
     fun trackerOnErrorCopyrateDB() {
         mTracker.send(HitBuilders.EventBuilder()
                 .setCategory(mContext.resources.getString(R.string.tracker_onError_title))
@@ -99,6 +128,11 @@ class MainPresenter: MvpPresenter<MainView>() {
                 .build())
     }
 
+    /**
+     * Поделиться данными аккаунта
+     *
+     * @param loginModel модель данных авторизации
+     */
     fun shareLoginData(loginModel: LoginEntity) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"

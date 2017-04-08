@@ -13,6 +13,4 @@ class LoginEntity {
     override fun toString(): String {
         return "LoginEntity(actionUrl='$actionUrl', originUrl='$originUrl', usernameValue='$usernameValue', passwordValue='$passwordValue')"
     }
-
-
 }
