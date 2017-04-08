@@ -2,11 +2,7 @@ package ru.semper_viventem.chromeor.data.common.rx
 
 import io.adev.rxwrapper.ObservableFactory
 import io.adev.rxwrapper.UseCase
-import io.adev.rxwrapper.util.observer
-import io.adev.rxwrapper.util.safeOnError
 import io.adev.rxwrapper.util.useCase
-import io.reactivex.ObservableEmitter
-import io.reactivex.Observer
 import io.reactivex.Scheduler
 
 /**
@@ -28,14 +24,4 @@ fun <T, C> asyncUseCase(observableFactory: ObservableFactory<T, C>): UseCase<T, 
     return useCase(observableFactory,
             observeScheduler = DEFAULT_OBSERVE_SCHEDULER,
             subscribeScheduler = DEFAULT_SUBSCRIBE_SCHEDULER)
-}
-
-fun <T> observer(emitter: ObservableEmitter<T>): Observer<T> {
-    return observer({ result ->
-        emitter.onNext(result)
-    }, {
-        emitter.onComplete()
-    }, { error ->
-        emitter.safeOnError(error)
-    })
 }

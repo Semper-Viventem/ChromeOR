@@ -1,19 +1,17 @@
 package ru.semper_viventem.chromeor.presentation.view.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
-import com.pawegio.kandroid.find
+import com.pawegio.kandroid.startActivity
+import kotlinx.android.synthetic.main.content_main.*
 import ru.semper_viventem.chromeor.R
 import ru.semper_viventem.chromeor.presentation.dialog.DialogManager
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
@@ -59,8 +57,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
 
         mAdapter = LoginListAdapter(selectListener)
-        find<RecyclerView>(R.id.vRecyclerView).adapter = mAdapter
-        find<RecyclerView>(R.id.vRecyclerView).layoutManager = LinearLayoutManager(this)
+        vRecyclerView.adapter = mAdapter
+        vRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     override fun onResume() {
@@ -76,8 +74,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         mAdapter.setData(passList)
         mDialogManager.hideProgressDialog()
 
-        if (!passList.isEmpty())
-            find<ImageView>(R.id.vImageView).visibility = View.GONE
+        if (passList.isNotEmpty())
+            vRecyclerView.visibility = View.GONE
 
     }
 
@@ -112,7 +110,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                 mMainPresenter.searchFromList(newText)
                 return false
             }
-
         })
 
         return true
@@ -122,8 +119,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         val id = item.itemId
 
         if (id == R.id.action_settings) {
-            val intent = Intent(this, AboutActivity::class.java)
-            startActivity(intent)
+            startActivity<AboutActivity>()
         }
 
         return super.onOptionsItemSelected(item)
