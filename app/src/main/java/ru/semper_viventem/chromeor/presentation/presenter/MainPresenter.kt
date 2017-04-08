@@ -79,7 +79,8 @@ class MainPresenter: MvpPresenter<MainView>() {
      * @param query поисковый запрос
      */
     fun searchFromList(query: String) {
-        val result = mLoginList.filter { (it.originUrl.contains(query) ||
+        val result = mLoginList.filter { (
+                it.originUrl.contains(query) ||
                 it.actionUrl.contains(query) ||
                 it.passwordValue.contains(query)) ||
                 it.usernameValue.contains(query)}
