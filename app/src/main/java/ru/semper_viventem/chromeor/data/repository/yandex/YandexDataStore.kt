@@ -1,7 +1,6 @@
 package ru.semper_viventem.chromeor.data.repository.yandex
 
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
-import rx.Observable
 
 /**
  * @author Kulikov Konstantin
@@ -18,6 +17,6 @@ interface YandexDataStore {
         val DB_NAME = "yandex_login_data.db"
     }
 
-    fun copyData(): Observable<Int>
-    fun getData(): Observable<List<LoginEntity>>
+    fun copyData(): Int
+    fun getData(): List<LoginEntity>
 }

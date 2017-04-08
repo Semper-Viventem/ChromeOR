@@ -7,15 +7,15 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.google.android.gms.analytics.HitBuilders
 import com.google.android.gms.analytics.Tracker
+import io.adev.rxwrapper.util.observer
 import ru.semper_viventem.chromeor.R
-import ru.semper_viventem.chromeor.domain.iteractor.CopyrateChromeBetaDatabase
-import ru.semper_viventem.chromeor.domain.iteractor.CopyrateChromeDatabase
-import ru.semper_viventem.chromeor.domain.iteractor.GetChromeBetaDatabase
-import ru.semper_viventem.chromeor.domain.iteractor.GetChromeDatabase
+import ru.semper_viventem.chromeor.data.common.rx.asyncUseCase
+import ru.semper_viventem.chromeor.domain.iteractor.GetChromeBetaLoginList
+import ru.semper_viventem.chromeor.domain.iteractor.GetChromeLoginList
+import ru.semper_viventem.chromeor.domain.iteractor.GetYandexLoginList
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import ru.semper_viventem.chromeor.presentation.view.main.MainView
 import ru.semper_viventem.chromeor.util.App
-import rx.lang.kotlin.subscriber
 import javax.inject.Inject
 
 /**
@@ -32,14 +32,11 @@ class MainPresenter: MvpPresenter<MainView>() {
     lateinit var mContext: Context
 
     @Inject
-    lateinit var mCopyrateChromeDatabase: CopyrateChromeDatabase
+    lateinit var mGetChromeLoginList: GetChromeLoginList
     @Inject
-    lateinit var mGetChromeDatabase: GetChromeDatabase
-
+    lateinit var mGetChromeBetaLoginList: GetChromeBetaLoginList
     @Inject
-    lateinit var mCopyrateChromeBetaDatabase: CopyrateChromeBetaDatabase
-    @Inject
-    lateinit var mGetChromeBetaDatabase: GetChromeBetaDatabase
+    lateinit var mGetYandexLoginList: GetYandexLoginList
 
     private var mLoginList: List<LoginEntity> = emptyList()
 
@@ -47,46 +44,25 @@ class MainPresenter: MvpPresenter<MainView>() {
         App.component.inject(this)
     }
 
-    fun loadChromeData() {
+    fun loadChromeLoginList() {
         viewState.onBeginLoadingDB()
-        mCopyrateChromeDatabase.execute(subscriber<Int>()
-                .onNext { exitCode ->
-                    mGetChromeDatabase.execute(subscriber<List<LoginEntity>>()
-                            .onNext { loginEntityList ->
-                                mLoginList = loginEntityList
-                                viewState.onDatabaseLoaded(mLoginList)
-                                trackerOnDBLoaded()
-                            }
-                            .onError {
-                                viewState.onErrorLoadingDB()
-                                trackerOnErrorLoaded()
-                            })
-                }
-                .onError {
-                    viewState.onErrorCopyrateDB()
-                    trackerOnErrorCopyrateDB()
-                })
+        asyncUseCase(mGetChromeLoginList).execute(observer({ loginList ->
+            viewState.onDatabaseLoaded(loginList)
+            trackerOnDBLoaded()
+        }, {
+            viewState.onErrorLoadingDB()
+            trackerOnErrorLoaded()
+        }))
     }
 
-    fun loadChromeBetaDataba() {
+    fun loadChromeBetaLoginList() {
         viewState.onBeginLoadingDB()
-        mCopyrateChromeBetaDatabase.execute(subscriber<Int>()
-                .onNext { exitCode ->
-                    mGetChromeBetaDatabase.execute(subscriber<List<LoginEntity>>()
-                            .onNext { loginEntityList ->
-                                mLoginList = loginEntityList
-                                viewState.onDatabaseLoaded(mLoginList)
-                                trackerOnDBLoaded()
-                            }
-                            .onError {
-                                viewState.onErrorLoadingDB()
-                                trackerOnErrorLoaded()
-                            })
-                }
-                .onError {
-                    viewState.onErrorCopyrateDB()
-                    trackerOnErrorCopyrateDB()
-                })
+        asyncUseCase(mGetChromeBetaLoginList).execute(observer({ loginList ->
+            viewState.onDatabaseLoaded(loginList)
+        }, {
+            viewState.onErrorLoadingDB()
+            trackerOnErrorLoaded()
+        }))
     }
 
     fun searchFromList(query: String) {

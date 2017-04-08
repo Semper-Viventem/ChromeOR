@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ChromeOR.iml" filepath="$PROJECT_DIR$/ChromeOR.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rxwrapper/rxwrapper.iml" filepath="$PROJECT_DIR$/rxwrapper/rxwrapper.iml" />
     </modules>
   </component>
 </project>
