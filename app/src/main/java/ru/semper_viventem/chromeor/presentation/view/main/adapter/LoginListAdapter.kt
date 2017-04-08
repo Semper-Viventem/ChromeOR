@@ -3,9 +3,6 @@ package ru.semper_viventem.chromeor.presentation.view.main.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import com.pawegio.kandroid.find
 import com.pawegio.kandroid.inflateLayout
 import kotlinx.android.synthetic.main.holder_login_list.view.*
 import ru.semper_viventem.chromeor.R
@@ -56,10 +53,10 @@ class LoginListAdapter(
             itemView.vTextViewUsername.text = itemView.context.getString(R.string.holder_login_username, loginEntity.usernameValue)
             itemView.vTextViewPassword.text = itemView.context.getString(R.string.holder_login_password, loginEntity.passwordValue)
 
-            itemView.find<ImageButton>(R.id.vImageButtonShare).setOnClickListener {
+            itemView.vImageButtonShare.setOnClickListener {
                 mListener.onShareButtonClicked(loginEntity)
             }
-            itemView.find<LinearLayout>(R.id.vBodyLayout).setOnClickListener {
+            itemView.vBodyLayout.setOnClickListener {
                 mListener.onItemSelected(loginEntity)
             }
         }
