@@ -41,7 +41,7 @@ class YandexDataRepository @Inject constructor(
         get() = password_value
 
     override fun copyData(): Int {
-        return coporateDataBase()
+        return copyingDataBase()
     }
 
     override fun getData(): List<LoginEntity> {

@@ -30,5 +30,5 @@ interface MainView: MvpView {
     /**
      * Ошибка при копировании базы
      */
-    fun onErrorCopyrateDB()
+    fun onErrorCopyingDB()
 }

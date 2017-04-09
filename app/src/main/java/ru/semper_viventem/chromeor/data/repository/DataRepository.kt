@@ -14,46 +14,53 @@ abstract class DataRepository(
         private val mContext: Context
 ) {
 
-    private val mSDB: SQLiteDatabase = DataRepository
-            .RepositoryDBHelper(mContext, mContext.getDatabasePath(NEW_DATABASE_NAME).absolutePath)
-            .readableDatabase
-
     /**
      * Путь до исходной базы данных [String]
      */
-    abstract val ORIGIN_DATABASE_PATH: String
+    abstract protected val ORIGIN_DATABASE_PATH: String
 
     /**
      * Название копии базы данных в пакете данного приложения [String]
      */
-    abstract val NEW_DATABASE_NAME: String
+    abstract protected val NEW_DATABASE_NAME: String
 
     /**
      * Название колонки с адресом для авторизации [String]
      */
-    abstract val ACTION_URL: String
+    abstract protected val ACTION_URL: String
 
     /**
      * Название колонки с адресом на страницу для авторизации [String]
      */
-    abstract val ORIGIN_URL: String
+    abstract protected val ORIGIN_URL: String
 
     /**
      * Название колонки с именем пользователя [String]
      */
-    abstract val USERNAME_VALUE: String
+    abstract protected val USERNAME_VALUE: String
 
     /**
      * Название колонки с паролем пользователя [String]
      */
-    abstract val PASSWORD_VALUE: String
+    abstract protected val PASSWORD_VALUE: String
+
+    /**
+     * Название таблицы с данными авторизации [String]
+     */
+    protected open val TABLE_NAME: String = "logins"
+
+
+
+    protected val mSDB: SQLiteDatabase = DataRepository
+            .RepositoryDBHelper(mContext, mContext.getDatabasePath(NEW_DATABASE_NAME).absolutePath)
+            .readableDatabase
 
     /**
      * Копирование БД
      *
      * @return код результата итерации [Int]
      */
-    protected open fun coporateDataBase(): Int {
+    protected open fun copyingDataBase(): Int {
         val COMMAND = "cat $ORIGIN_DATABASE_PATH > ${mContext.getDatabasePath(NEW_DATABASE_NAME).absolutePath}\n" +
                 "chmod ugo+rwx ${mContext.getDatabasePath(NEW_DATABASE_NAME).absolutePath}\n"
         val NOT_ROOT = 255
@@ -83,7 +90,7 @@ abstract class DataRepository(
     protected open fun getLoginList(): List<LoginEntity> {
         val loginEntityList = ArrayList<LoginEntity>()
 
-        val cursor = mSDB.query("logins", arrayOf(ACTION_URL, ORIGIN_URL, USERNAME_VALUE, PASSWORD_VALUE),
+        val cursor = mSDB.query(TABLE_NAME, arrayOf(ACTION_URL, ORIGIN_URL, USERNAME_VALUE, PASSWORD_VALUE),
                 null, null,
                 null, null, null)
 
@@ -108,7 +115,7 @@ abstract class DataRepository(
         return loginEntityList
     }
 
-    private class RepositoryDBHelper(
+    protected class RepositoryDBHelper(
             context: Context,
             name: String
     ) : SQLiteOpenHelper(context, name, null, 1) {

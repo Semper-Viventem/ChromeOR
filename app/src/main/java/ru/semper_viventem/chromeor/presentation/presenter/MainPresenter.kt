@@ -70,7 +70,8 @@ class MainPresenter: MvpPresenter<MainView>() {
         asyncUseCase(mGetChromeBetaLoginList).execute(observer({ loginList ->
             mLoginList = loginList
             viewState.onDatabaseLoaded(mLoginList)
-        }, {
+        }, { error ->
+            error.printStackTrace()
             viewState.onErrorLoadingDB()
             trackerOnErrorLoaded()
         }))
@@ -90,47 +91,6 @@ class MainPresenter: MvpPresenter<MainView>() {
         viewState.onDatabaseLoaded(result)
     }
 
-    /**
-     * Трекер для статистики.
-     * Активность открыта
-     */
-    fun trackerOpenActivity() {
-        mTracker.setScreenName(mContext.resources.getString(R.string.tracker_activity_title))
-        mTracker.send(HitBuilders.ScreenViewBuilder().build())
-    }
-
-    /**
-     * Трекер для статистики.
-     * Список данных загружен успешно
-     */
-    fun trackerOnDBLoaded() {
-        mTracker.send(HitBuilders.EventBuilder()
-                .setCategory(mContext.resources.getString(R.string.tracker_onComplite_title))
-                .setAction(mContext.resources.getString(R.string.tracker_onComplite))
-                .build())
-    }
-
-    /**
-     * Трекер для статистики.
-     * Ошибка при выгрузке данных
-     */
-    fun trackerOnErrorLoaded() {
-        mTracker.send(HitBuilders.EventBuilder()
-                .setCategory(mContext.resources.getString(R.string.tracker_onError_title))
-                .setAction(mContext.resources.getString(R.string.tracker_onError))
-                .build())
-    }
-
-    /**
-     * Трекер для статистики.
-     * Ошибка при копировании БД
-     */
-    fun trackerOnErrorCopyrateDB() {
-        mTracker.send(HitBuilders.EventBuilder()
-                .setCategory(mContext.resources.getString(R.string.tracker_onError_title))
-                .setAction(mContext.resources.getString(R.string.tracker_not_root))
-                .build())
-    }
 
     /**
      * Поделиться данными аккаунта
@@ -157,5 +117,47 @@ class MainPresenter: MvpPresenter<MainView>() {
             //TODO обработка ошибок
             ex.printStackTrace()
         }
+    }
+
+    /**
+     * Трекер для статистики.
+     * Активность открыта
+     */
+    fun trackerOpenActivity() {
+        mTracker.setScreenName(mContext.resources.getString(R.string.tracker_activity_title))
+        mTracker.send(HitBuilders.ScreenViewBuilder().build())
+    }
+
+    /**
+     * Трекер для статистики.
+     * Список данных загружен успешно
+     */
+    private fun trackerOnDBLoaded() {
+        mTracker.send(HitBuilders.EventBuilder()
+                .setCategory(mContext.resources.getString(R.string.tracker_onComplite_title))
+                .setAction(mContext.resources.getString(R.string.tracker_onComplite))
+                .build())
+    }
+
+    /**
+     * Трекер для статистики.
+     * Ошибка при выгрузке данных
+     */
+    private fun trackerOnErrorLoaded() {
+        mTracker.send(HitBuilders.EventBuilder()
+                .setCategory(mContext.resources.getString(R.string.tracker_onError_title))
+                .setAction(mContext.resources.getString(R.string.tracker_onError))
+                .build())
+    }
+
+    /**
+     * Трекер для статистики.
+     * Ошибка при копировании БД
+     */
+    private fun trackerOnErrorCopyingDB() {
+        mTracker.send(HitBuilders.EventBuilder()
+                .setCategory(mContext.resources.getString(R.string.tracker_onError_title))
+                .setAction(mContext.resources.getString(R.string.tracker_not_root))
+                .build())
     }
 }

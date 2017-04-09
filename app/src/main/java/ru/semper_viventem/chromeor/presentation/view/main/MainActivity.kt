@@ -86,7 +86,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     }
 
-    override fun onErrorCopyrateDB() {
+    override fun onErrorCopyingDB() {
         mDialogManager.hideProgressDialog()
         mDialogManager.showInformationDialog(getString(R.string.oh_no), getString(R.string.have_root))
     }
