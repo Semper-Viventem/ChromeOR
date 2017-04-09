@@ -13,7 +13,6 @@ import ru.semper_viventem.chromeor.data.common.rx.asyncUseCase
 import ru.semper_viventem.chromeor.domain.iteractor.GetChromeBetaLoginList
 import ru.semper_viventem.chromeor.domain.iteractor.GetChromeLoginList
 import ru.semper_viventem.chromeor.domain.iteractor.GetYandexLoginList
-import ru.semper_viventem.chromeor.domain.store.ChromeDataStore
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import ru.semper_viventem.chromeor.presentation.view.main.MainView
 import ru.semper_viventem.chromeor.util.App
@@ -38,9 +37,6 @@ class MainPresenter: MvpPresenter<MainView>() {
     lateinit var mGetChromeBetaLoginList: GetChromeBetaLoginList
     @Inject
     lateinit var mGetYandexLoginList: GetYandexLoginList
-
-    @Inject
-    lateinit var mChromeRepository: ChromeDataStore
 
     private var mLoginList: List<LoginEntity> = emptyList()
 
@@ -87,10 +83,10 @@ class MainPresenter: MvpPresenter<MainView>() {
      */
     fun searchFromList(query: String) {
         val result = mLoginList.filter { (
-                it.originUrl.contains(query) ||
-                it.actionUrl.contains(query) ||
-                it.passwordValue.contains(query)) ||
-                it.usernameValue.contains(query)}
+                it.originUrl.contains(query, true) ||
+                it.actionUrl.contains(query, true) ||
+                it.passwordValue.contains(query, true)) ||
+                it.usernameValue.contains(query, true)}
         viewState.onDatabaseLoaded(result)
     }
 

@@ -20,7 +20,6 @@ class GetChromeLoginList @Inject constructor(
         mChromeDataStore.copyData()
         val result = mChromeDataStore.getData()
 
-
         emitter.onNext(result)
     }
 }

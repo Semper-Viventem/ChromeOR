@@ -1,7 +1,7 @@
 package ru.semper_viventem.chromeor.data.repository.chrome_beta
 
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
+import ru.semper_viventem.chromeor.data.repository.DataRepository
 import ru.semper_viventem.chromeor.domain.store.ChromeBetaDataStore
 import ru.semper_viventem.chromeor.domain.store.ChromeBetaDataStore.Companion.DB_NAME
 import ru.semper_viventem.chromeor.domain.store.ChromeBetaDataStore.Companion.DB_PACKAGE
@@ -10,10 +10,6 @@ import ru.semper_viventem.chromeor.domain.store.ChromeBetaDataStore.Companion.or
 import ru.semper_viventem.chromeor.domain.store.ChromeBetaDataStore.Companion.password_value
 import ru.semper_viventem.chromeor.domain.store.ChromeBetaDataStore.Companion.username_value
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
-import java.io.DataOutputStream
-import java.io.File
-import java.io.IOException
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,83 +19,34 @@ import javax.inject.Singleton
  */
 @Singleton
 class ChromeBetaDataRepository @Inject constructor(
-        private val mContext: Context
-): ChromeBetaDataStore {
+        context: Context
+): DataRepository(context), ChromeBetaDataStore {
+
+
+    override val NEW_DATABASE_NAME: String
+        get() = DB_NAME
+
+    override val ORIGIN_DATABASE_PATH: String
+        get() = DB_PACKAGE
+
+    override val ACTION_URL: String
+        get() = action_url
+
+    override val ORIGIN_URL: String
+        get() = origin_url
+
+    override val USERNAME_VALUE: String
+        get() = username_value
+
+    override val PASSWORD_VALUE: String
+        get() = password_value
 
     override fun copyData(): Int {
-        val COMMAND = "cat $DB_PACKAGE > ${mContext.applicationInfo.dataDir}/databases/$DB_NAME \n"
-        val NOT_ROOT = 255
-
-        val p: Process
-        var exitCode = NOT_ROOT
-
-        try {
-            // Preform su to get root privledges
-            p = Runtime.getRuntime().exec("su")
-
-            // Attempt to write a file to a root-only
-            val os = DataOutputStream(p.outputStream)
-            os.writeBytes(COMMAND + " \n")
-
-            // Close the terminal
-            os.writeBytes("exit\n")
-            os.flush()
-
-            try {
-                p.waitFor()
-                exitCode = p.exitValue()
-
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-                //TODO
-            }
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-            //TODO
-        }
-        return exitCode
+        return coporateDataBase()
     }
 
     override fun getData(): List<LoginEntity> {
-
-        val DB_DESTINATION = mContext.applicationInfo.dataDir + "/databases/"
-        val DB_BASE_DEST = DB_DESTINATION + File.separator + DB_NAME
-        val mDbFile: File = File(DB_BASE_DEST)
-
-
-        val loginEntityList = ArrayList<LoginEntity>()
-
-        try {
-            val sdb = SQLiteDatabase.openDatabase(mDbFile.path, null, 0)
-
-            val cursor = sdb.query("logins", arrayOf(action_url, origin_url, username_value, password_value),
-                    null, null,
-                    null, null, null)
-
-            cursor.moveToFirst()
-
-            while (cursor.position < cursor.count) {
-                val loginEntity = LoginEntity()
-
-                loginEntity.actionUrl = cursor.getString(cursor.getColumnIndex(action_url))
-                loginEntity.originUrl = cursor.getString(cursor.getColumnIndex(origin_url))
-                loginEntity.usernameValue = cursor.getString(cursor.getColumnIndex(username_value))
-
-                val blob = cursor.getBlob(cursor.getColumnIndex(password_value))
-                loginEntity.passwordValue = String(blob)
-
-                loginEntityList.add(loginEntity)
-
-                cursor.moveToNext()
-            }
-            cursor.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            //TODO
-        }
-
-        return loginEntityList
+        return getLoginList()
     }
 
 }

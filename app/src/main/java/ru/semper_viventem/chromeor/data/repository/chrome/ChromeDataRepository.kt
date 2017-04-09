@@ -1,8 +1,7 @@
 package ru.semper_viventem.chromeor.data.repository.chrome
 
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
+import ru.semper_viventem.chromeor.data.repository.DataRepository
 import ru.semper_viventem.chromeor.domain.store.ChromeDataStore
 import ru.semper_viventem.chromeor.domain.store.ChromeDataStore.Companion.DB_NAME
 import ru.semper_viventem.chromeor.domain.store.ChromeDataStore.Companion.DB_PACKAGE
@@ -11,8 +10,6 @@ import ru.semper_viventem.chromeor.domain.store.ChromeDataStore.Companion.origin
 import ru.semper_viventem.chromeor.domain.store.ChromeDataStore.Companion.password_value
 import ru.semper_viventem.chromeor.domain.store.ChromeDataStore.Companion.username_value
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
-import java.io.DataOutputStream
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,76 +19,33 @@ import javax.inject.Singleton
  */
 @Singleton
 class ChromeDataRepository @Inject constructor(
-        private val mContext: Context
-): ChromeDataStore {
+        context: Context
+): DataRepository(context), ChromeDataStore {
 
-    private var mSDB: SQLiteDatabase
+    override val NEW_DATABASE_NAME: String
+        get() = DB_NAME
 
-    init {
-        mSDB = WorkDB(mContext, mContext.getDatabasePath(ChromeDataStore.DB_NAME).absolutePath).readableDatabase
-    }
+    override val ORIGIN_DATABASE_PATH: String
+        get() = DB_PACKAGE
+
+    override val ACTION_URL: String
+        get() = action_url
+
+    override val ORIGIN_URL: String
+        get() = origin_url
+
+    override val USERNAME_VALUE: String
+        get() = username_value
+
+    override val PASSWORD_VALUE: String
+        get() = password_value
 
     override fun copyData(): Int {
-        val COMMAND = "cat $DB_PACKAGE > ${mContext.getDatabasePath(DB_NAME).absolutePath}\n" +
-                "chmod ugo+rwx ${mContext.getDatabasePath(DB_NAME).absolutePath}\n"
-        val NOT_ROOT = 255
-
-        val p: Process = Runtime.getRuntime().exec("su")
-        var exitCode = NOT_ROOT
-
-        val os = DataOutputStream(p.outputStream)
-        os.writeBytes(COMMAND + " \n")
-
-        // Close the terminal
-        os.writeBytes("exit\n")
-        os.flush()
-
-        p.waitFor()
-        exitCode = p.exitValue()
-
-        return exitCode
+        return coporateDataBase()
     }
-
 
     override fun getData(): List<LoginEntity> {
-        val loginEntityList = ArrayList<LoginEntity>()
-
-        val cursor = mSDB.query("logins", arrayOf(action_url, origin_url, username_value, password_value),
-                null, null,
-                null, null, null)
-
-        cursor.moveToFirst()
-
-        while (cursor.position < cursor.count) {
-            val loginEntity = LoginEntity()
-
-            loginEntity.actionUrl = cursor.getString(cursor.getColumnIndex(action_url))
-            loginEntity.originUrl = cursor.getString(cursor.getColumnIndex(origin_url))
-            loginEntity.usernameValue = cursor.getString(cursor.getColumnIndex(username_value))
-
-            val blob = cursor.getBlob(cursor.getColumnIndex(password_value))
-            loginEntity.passwordValue = String(blob)
-
-            loginEntityList.add(loginEntity)
-
-            cursor.moveToNext()
-        }
-        cursor.close()
-
-        return loginEntityList
+        return getLoginList()
     }
 
-
-    /**
-     * @author Kulikov Konstantin
-     * @since 09.04.2017.
-     */
-    class WorkDB(
-            context: Context,
-            name: String
-    ) : SQLiteOpenHelper(context, name, null, 1) {
-
-        override fun onCreate(db: SQLiteDatabase) {}
-        override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
-    }
 }

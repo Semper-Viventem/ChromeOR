@@ -70,8 +70,13 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         mAdapter.setData(passList)
         mDialogManager.hideProgressDialog()
 
-        if (passList.isEmpty())
+        if (passList.isNotEmpty()) {
+            vRecyclerView.visibility = View.VISIBLE
+            vImageView.visibility = View.GONE
+        } else {
             vRecyclerView.visibility = View.GONE
+            vImageView.visibility = View.VISIBLE
+        }
 
     }
 
