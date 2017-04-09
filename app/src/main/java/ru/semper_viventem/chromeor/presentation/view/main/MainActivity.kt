@@ -53,8 +53,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             }
         })
 
-        vRecyclerView.adapter = mAdapter
         vRecyclerView.layoutManager = LinearLayoutManager(this)
+        vRecyclerView.adapter = mAdapter
     }
 
     override fun onResume() {
@@ -70,7 +70,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         mAdapter.setData(passList)
         mDialogManager.hideProgressDialog()
 
-        if (passList.isNotEmpty())
+        if (passList.isEmpty())
             vRecyclerView.visibility = View.GONE
 
     }

@@ -69,6 +69,7 @@ class MainPresenter: MvpPresenter<MainView>() {
      * Загрузить список аккаунтов из Chrome Beta
      */
     fun loadChromeBetaLoginList() {
+
         viewState.onBeginLoadingDB()
         asyncUseCase(mGetChromeBetaLoginList).execute(observer({ loginList ->
             mLoginList = loginList

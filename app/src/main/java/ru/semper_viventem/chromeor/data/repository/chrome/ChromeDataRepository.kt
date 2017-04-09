@@ -25,6 +25,12 @@ class ChromeDataRepository @Inject constructor(
         private val mContext: Context
 ): ChromeDataStore {
 
+    private var mSDB: SQLiteDatabase
+
+    init {
+        mSDB = WorkDB(mContext, mContext.getDatabasePath(ChromeDataStore.DB_NAME).absolutePath).readableDatabase
+    }
+
     override fun copyData(): Int {
         val COMMAND = "cat $DB_PACKAGE > ${mContext.getDatabasePath(DB_NAME).absolutePath}\n" +
                 "chmod ugo+rwx ${mContext.getDatabasePath(DB_NAME).absolutePath}\n"
@@ -48,18 +54,9 @@ class ChromeDataRepository @Inject constructor(
 
 
     override fun getData(): List<LoginEntity> {
-//        val DB_DESTINATION = mContext.applicationInfo.dataDir + "/databases/"
-//        val DB_BASE_DEST = DB_DESTINATION + DB_NAME
-//        val mDbFile: File = File(DB_BASE_DEST)
-        val databasePath = mContext.getDatabasePath(DB_NAME)
-
         val loginEntityList = ArrayList<LoginEntity>()
 
-        //val sdb = SQLiteDatabase.openDatabase(databasePath.absolutePath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS or SQLiteDatabase.OPEN_READONLY)
-
-        val sdb = ChromeDBHelper(mContext, DB_NAME).readableDatabase
-
-        val cursor = sdb.query("logins", arrayOf(action_url, origin_url, username_value, password_value),
+        val cursor = mSDB.query("logins", arrayOf(action_url, origin_url, username_value, password_value),
                 null, null,
                 null, null, null)
 
@@ -84,20 +81,17 @@ class ChromeDataRepository @Inject constructor(
         return loginEntityList
     }
 
-    private class ChromeDBHelper(
-            private val mContext: Context,
-            mDBName: String
-    ): SQLiteOpenHelper(mContext, mDBName, null, 1) {
 
-        override fun onCreate(db: SQLiteDatabase?) {
-            db?.execSQL("CREATE TABLE android_metadata (locale TEXT);")
-            db?.execSQL("INSERT INTO android_metadata VALUES('en-US');")
-        }
+    /**
+     * @author Kulikov Konstantin
+     * @since 09.04.2017.
+     */
+    class WorkDB(
+            context: Context,
+            name: String
+    ) : SQLiteOpenHelper(context, name, null, 1) {
 
-        override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-            db?.execSQL("CREATE TABLE android_metadata (locale TEXT);")
-            db?.execSQL("INSERT INTO android_metadata VALUES('en-US');")
-        }
-
+        override fun onCreate(db: SQLiteDatabase) {}
+        override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
     }
 }
