@@ -13,6 +13,7 @@ import ru.semper_viventem.chromeor.data.common.rx.asyncUseCase
 import ru.semper_viventem.chromeor.domain.iteractor.GetChromeBetaLoginList
 import ru.semper_viventem.chromeor.domain.iteractor.GetChromeLoginList
 import ru.semper_viventem.chromeor.domain.iteractor.GetYandexLoginList
+import ru.semper_viventem.chromeor.domain.store.ChromeDataStore
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import ru.semper_viventem.chromeor.presentation.view.main.MainView
 import ru.semper_viventem.chromeor.util.App
@@ -38,6 +39,9 @@ class MainPresenter: MvpPresenter<MainView>() {
     @Inject
     lateinit var mGetYandexLoginList: GetYandexLoginList
 
+    @Inject
+    lateinit var mChromeRepository: ChromeDataStore
+
     private var mLoginList: List<LoginEntity> = emptyList()
 
     init {
@@ -49,11 +53,13 @@ class MainPresenter: MvpPresenter<MainView>() {
      */
     fun loadChromeLoginList() {
         viewState.onBeginLoadingDB()
+
         asyncUseCase(mGetChromeLoginList).execute(observer({ loginList ->
             mLoginList = loginList
             viewState.onDatabaseLoaded(mLoginList)
             trackerOnDBLoaded()
-        }, {
+        }, { error ->
+            error.printStackTrace()
             viewState.onErrorLoadingDB()
             trackerOnErrorLoaded()
         }))
