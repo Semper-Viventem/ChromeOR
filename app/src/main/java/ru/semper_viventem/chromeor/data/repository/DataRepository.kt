@@ -51,9 +51,8 @@ abstract class DataRepository(
 
 
 
-    protected val mSDB: SQLiteDatabase = DataRepository
-            .RepositoryDBHelper(mContext, mContext.getDatabasePath(NEW_DATABASE_NAME).absolutePath)
-            .readableDatabase
+    protected val mSDB: SQLiteDatabase =
+            RepositoryDBHelper(mContext, mContext.getDatabasePath(NEW_DATABASE_NAME).absolutePath).readableDatabase
 
     /**
      * Копирование БД
