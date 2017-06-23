@@ -9,6 +9,7 @@ import com.google.android.gms.analytics.HitBuilders
 import com.google.android.gms.analytics.Tracker
 import io.adev.rxwrapper.util.observer
 import ru.semper_viventem.chromeor.R
+import ru.semper_viventem.chromeor.data.common.exception.RootException
 import ru.semper_viventem.chromeor.data.common.rx.asyncUseCase
 import ru.semper_viventem.chromeor.domain.iteractor.GetChromeBetaLoginList
 import ru.semper_viventem.chromeor.domain.iteractor.GetChromeLoginList
@@ -49,15 +50,12 @@ class MainPresenter: MvpPresenter<MainView>() {
      */
     fun loadChromeLoginList() {
         viewState.onBeginLoadingDB()
-
         asyncUseCase(mGetChromeLoginList).execute(observer({ loginList ->
             mLoginList = loginList
             viewState.onDatabaseLoaded(mLoginList)
             trackerOnDBLoaded()
         }, { error ->
-            error.printStackTrace()
-            viewState.onErrorLoadingDB()
-            trackerOnErrorLoaded()
+            checkError(error)
         }))
     }
 
@@ -65,16 +63,27 @@ class MainPresenter: MvpPresenter<MainView>() {
      * Загрузить список аккаунтов из Chrome Beta
      */
     fun loadChromeBetaLoginList() {
-
         viewState.onBeginLoadingDB()
         asyncUseCase(mGetChromeBetaLoginList).execute(observer({ loginList ->
             mLoginList = loginList
             viewState.onDatabaseLoaded(mLoginList)
         }, { error ->
-            error.printStackTrace()
-            viewState.onErrorLoadingDB()
-            trackerOnErrorLoaded()
+            checkError(error)
         }))
+    }
+
+    private fun checkError(error: Throwable) {
+        error.printStackTrace()
+        when (error) {
+            is RootException -> {
+                viewState.onErrorCopyingDB()
+                trackerOnErrorCopyingDB()
+            }
+            else -> {
+                viewState.onErrorLoadingDB()
+                trackerOnErrorLoaded()
+            }
+        }
     }
 
     /**

@@ -4,10 +4,10 @@
     <string name="action_settings">Настройки</string>
     <string name="close">назад</string>
     <string name="error">Ошибка!</string>
-    <string name="get_database">Сканирование базы...</string>
-    <string name="have_root">У вас точно есть root-права?</string>
+    <string name="get_database">Сканирование базы…</string>
+    <string name="have_root">По всей видимости, Root-права на этом устройстве отсутствуют.</string>
     <string name="is_loaded">База данных загружена!</string>
-    <string name="login">Загрузка...</string>
+    <string name="login">Загрузка…</string>
     <string name="oh_no">Какой ужас!</string>
     <string name="unknow_error">Похоже, что произошла какая-то ошибка. Пожалуйста убедитесь, что у вас есть root-доступ и установлен Google Chrome актуальной версии. Возможно, установка BusyBox изменит ситуацию. Да поможет вам root! :)</string>
     <string name="about_text">ChromeOR - небольшая утилита для извлечения паролей из Google Chrome\n\n© Kulikov Konstantin\nsemper-viventem.ru\nkostyaxxx8@gmail.com\n\n2016</string>

@@ -3,6 +3,7 @@ package ru.semper_viventem.chromeor.data.repository
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import ru.semper_viventem.chromeor.data.common.exception.RootException
 import ru.semper_viventem.chromeor.presentation.model.LoginEntity
 import java.io.DataOutputStream
 
@@ -13,6 +14,10 @@ import java.io.DataOutputStream
 abstract class DataRepository(
         private val mContext: Context
 ) {
+
+    companion object {
+        const val NOT_ROOT = 255
+    }
 
     /**
      * Путь до исходной базы данных [String]
@@ -60,24 +65,29 @@ abstract class DataRepository(
      * @return код результата итерации [Int]
      */
     protected open fun copyingDataBase(): Int {
-        val COMMAND = "cat $ORIGIN_DATABASE_PATH > ${mContext.getDatabasePath(NEW_DATABASE_NAME).absolutePath}\n" +
-                "chmod ugo+rwx ${mContext.getDatabasePath(NEW_DATABASE_NAME).absolutePath}\n"
-        val NOT_ROOT = 255
+        try {
+            val COMMAND = "cat $ORIGIN_DATABASE_PATH > ${mContext.getDatabasePath(NEW_DATABASE_NAME).absolutePath}\n" +
+                    "chmod ugo+rwx ${mContext.getDatabasePath(NEW_DATABASE_NAME).absolutePath}\n"
 
-        val p: Process = Runtime.getRuntime().exec("su")
-        var exitCode = NOT_ROOT
+            val p: Process = Runtime.getRuntime().exec("su")
+            var exitCode = NOT_ROOT
 
-        val os = DataOutputStream(p.outputStream)
-        os.writeBytes(COMMAND + " \n")
+            val os = DataOutputStream(p.outputStream)
+            os.writeBytes(COMMAND + " \n")
 
-        // Close the terminal
-        os.writeBytes("exit\n")
-        os.flush()
+            // Close the terminal
+            os.writeBytes("exit\n")
+            os.flush()
 
-        p.waitFor()
-        exitCode = p.exitValue()
+            p.waitFor()
+            exitCode = p.exitValue()
 
-        return exitCode
+            if (exitCode== NOT_ROOT) throw RootException()
+
+            return exitCode
+        } catch (error: Exception) {
+            throw RootException()
+        }
     }
 
     /**
@@ -118,7 +128,6 @@ abstract class DataRepository(
             context: Context,
             name: String
     ) : SQLiteOpenHelper(context, name, null, 1) {
-
         override fun onCreate(db: SQLiteDatabase) {}
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
     }
